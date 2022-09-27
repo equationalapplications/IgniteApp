@@ -1,4 +1,4 @@
-package com.helloworld;
+package com.igniteapp;
 
 import android.os.Bundle;
 
