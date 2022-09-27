@@ -1,9 +1,9 @@
 {
-  "name": "HelloWorld",
-  "displayName": "HelloWorld",
+  "name": "IgniteApp",
+  "displayName": "IgniteApp",
   "expo": {
-    "name": "HelloWorld",
-    "slug": "HelloWorld",
+    "name": "IgniteApp",
+    "slug": "IgniteApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
