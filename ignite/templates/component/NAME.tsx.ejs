@@ -4,8 +4,6 @@ patch:
   append: "export * from \"./<%= props.pascalCaseName %>\"\n"
   skip: <%= props.skipIndexFile %>
 ---
-// MAVERICKTODO: update the generator template with new patterns
-
 import * as React from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
@@ -24,7 +22,7 @@ export interface <%= props.pascalCaseName %>Props {
  */
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
   const { style } = props
-  const $styles = Object.assign({}, $container, style)
+  const $styles = [$container, style]
 
   return (
     <View style={$styles}>

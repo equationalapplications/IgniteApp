@@ -1,3 +1,5 @@
+import { useScrollToTop } from "@react-navigation/native"
+import { StatusBar, StatusBarProps } from "expo-status-bar"
 import React, { useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
@@ -10,10 +12,8 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { StatusBar, StatusBarProps } from "expo-status-bar"
-import { Edge, SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
-import { useScrollToTop } from "@react-navigation/native"
 import { colors } from "../theme"
+import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 
 interface BaseScreenProps {
   /**
@@ -31,7 +31,7 @@ interface BaseScreenProps {
   /**
    * Override the default edges for the safe area.
    */
-  safeAreaEdges?: Edge[]
+  safeAreaEdges?: ExtendedEdge[]
   /**
    * Background color
    */
@@ -44,10 +44,6 @@ interface BaseScreenProps {
    * By how much should we offset the keyboard? Defaults to 0.
    */
   keyboardOffset?: number
-  /**
-   * Pass any additional props directly to the SafeAreaView component.
-   */
-  SafeAreaViewProps?: SafeAreaViewProps
   /**
    * Pass any additional props directly to the StatusBar component.
    */
@@ -197,19 +193,14 @@ export function Screen(props: ScreenProps) {
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     safeAreaEdges,
-    SafeAreaViewProps,
     StatusBarProps,
     statusBarStyle = "dark",
   } = props
 
-  const Wrapper = safeAreaEdges?.length ? SafeAreaView : View
+  const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
   return (
-    <Wrapper
-      edges={safeAreaEdges}
-      {...SafeAreaViewProps}
-      style={[$safeAreaStyle, SafeAreaViewProps?.style, { backgroundColor }]}
-    >
+    <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
@@ -224,11 +215,11 @@ export function Screen(props: ScreenProps) {
           <ScreenWithScrolling {...props} />
         )}
       </KeyboardAvoidingView>
-    </Wrapper>
+    </View>
   )
 }
 
-const $safeAreaStyle: ViewStyle = {
+const $containerStyle: ViewStyle = {
   flex: 1,
   height: "100%",
   width: "100%",
